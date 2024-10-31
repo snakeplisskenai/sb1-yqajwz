@@ -1,0 +1,92 @@
+---
+const categories = [
+  {
+    name: 'Living Room',
+    href: '/shop/living-room',
+    subcategories: [
+      { name: 'Sofas', href: '/shop/living-room/sofas' },
+      { name: 'Armchairs', href: '/shop/living-room/armchairs' },
+      { name: 'Coffee Tables', href: '/shop/living-room/coffee-tables' },
+      { name: 'Side Tables', href: '/shop/living-room/side-tables' },
+      { name: 'TV Units', href: '/shop/living-room/tv-units' }
+    ]
+  },
+  {
+    name: 'Dining Room',
+    href: '/shop/dining-room',
+    subcategories: [
+      { name: 'Dining Tables', href: '/shop/dining-room/dining-tables' },
+      { name: 'Dining Chairs', href: '/shop/dining-room/dining-chairs' },
+      { name: 'Sideboards', href: '/shop/dining-room/sideboards' },
+      { name: 'Display Cabinets', href: '/shop/dining-room/display-cabinets' },
+      { name: 'Bar Stools', href: '/shop/dining-room/bar-stools' }
+    ]
+  },
+  {
+    name: 'Bedroom',
+    href: '/shop/bedroom',
+    subcategories: [
+      { name: 'Beds', href: '/shop/bedroom/beds' },
+      { name: 'Bedside Tables', href: '/shop/bedroom/bedside-tables' },
+      { name: 'Dressing Tables', href: '/shop/bedroom/dressing-tables' },
+      { name: 'Wardrobes', href: '/shop/bedroom/wardrobes' },
+      { name: 'Bedroom Chairs', href: '/shop/bedroom/bedroom-chairs' }
+    ]
+  },
+  {
+    name: 'Lighting',
+    href: '/shop/lighting',
+    subcategories: [
+      { name: 'Chandeliers', href: '/shop/lighting/chandeliers' },
+      { name: 'Table Lamps', href: '/shop/lighting/table-lamps' },
+      { name: 'Floor Lamps', href: '/shop/lighting/floor-lamps' },
+      { name: 'Wall Lights', href: '/shop/lighting/wall-lights' },
+      { name: 'Pendant Lights', href: '/shop/lighting/pendant-lights' }
+    ]
+  },
+  {
+    name: 'Accessories',
+    href: '/shop/accessories',
+    subcategories: [
+      { name: 'Mirrors', href: '/shop/accessories/mirrors' },
+      { name: 'Wall Art', href: '/shop/accessories/wall-art' },
+      { name: 'Vases', href: '/shop/accessories/vases' },
+      { name: 'Cushions', href: '/shop/accessories/cushions' },
+      { name: 'Throws', href: '/shop/accessories/throws' }
+    ]
+  }
+];
+---
+
+<nav class="border-b border-gray-200">
+  <div class="container mx-auto px-4">
+    <ul class="flex justify-center space-x-8">
+      {categories.map(category => (
+        <li class="group relative py-4">
+          <a 
+            href={category.href}
+            class="text-gray-600 hover:text-secondary transition-colors"
+          >
+            {category.name}
+          </a>
+          <div class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+            <div class="bg-white shadow-lg rounded-lg py-4 px-6 min-w-[200px]">
+              <ul class="space-y-2">
+                {category.subcategories.map(sub => (
+                  <li>
+                    <a 
+                      href={sub.href}
+                      class="text-gray-600 hover:text-secondary transition-colors"
+                    >
+                      {sub.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>

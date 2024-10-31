@@ -1,0 +1,32 @@
+---
+import ProductCard from './ProductCard.astro';
+import { fetchProducts } from '../lib/sanity';
+
+const products = await fetchProducts();
+const featuredProducts = products.slice(0, 4);
+---
+
+<section class="py-20">
+  <div class="container mx-auto px-4">
+    <h2 class="font-serif text-4xl text-center mb-12">Featured Products</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+      {featuredProducts.map(product => (
+        <ProductCard
+          title={product.title}
+          price={product.price}
+          image={product.mainImage}
+          slug={product.slug}
+          category={product.category}
+        />
+      ))}
+    </div>
+    <div class="text-center mt-12">
+      <a 
+        href="/shop" 
+        class="inline-block bg-secondary text-primary px-8 py-3 font-medium hover:bg-opacity-90 transition-colors"
+      >
+        View All Products
+      </a>
+    </div>
+  </div>
+</section>

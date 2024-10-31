@@ -1,0 +1,23 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProductGrid from '../../components/ProductGrid.astro';
+import { products } from '../../data/products';
+
+// Filter products that are on sale (price less than original)
+const saleProducts = products.filter(product => product.price < 1000);
+---
+
+<Layout 
+  title="Outlet - ARTANNA Luxury Home Decor"
+  description="Shop our luxury home decor pieces at special prices."
+>
+  <div class="py-12">
+    <div class="container mx-auto px-4">
+      <h1 class="font-serif text-4xl md:text-5xl text-center mb-12">Outlet</h1>
+      <div class="text-center mb-12">
+        <p class="text-xl text-gray-600">Discover exceptional pieces at special prices.</p>
+      </div>
+      <ProductGrid products={saleProducts} />
+    </div>
+  </div>
+</Layout>

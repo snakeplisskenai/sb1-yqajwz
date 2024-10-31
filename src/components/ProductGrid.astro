@@ -1,0 +1,26 @@
+---
+import ProductCard from './ProductCard.astro';
+import type { Product } from '../types';
+
+interface Props {
+  products: Product[];
+  title?: string;
+}
+
+const { products, title } = Astro.props;
+---
+
+<div class="container mx-auto px-4">
+  {title && <h2 class="font-serif text-3xl md:text-4xl text-center mb-12">{title}</h2>}
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    {products.map((product) => (
+      <ProductCard
+        title={product.title}
+        price={product.price}
+        image={product.mainImage}
+        slug={product.slug}
+        category={product.category}
+      />
+    ))}
+  </div>
+</div>

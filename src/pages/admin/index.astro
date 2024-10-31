@@ -1,0 +1,90 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { client } from '../../lib/sanity';
+import type { Product } from '../../types';
+
+const products = await client.fetch<Product[]>(`
+  *[_type == "product"] {
+    _id,
+    title,
+    slug,
+    pricing {
+      basePrice,
+      salePrice
+    },
+    mainImage,
+    status,
+    inventory {
+      quantity
+    }
+  }
+`);
+---
+
+<Layout title="Admin - ARTANNA Luxury Home Decor">
+  <div class="container mx-auto px-4 py-12">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="font-serif text-3xl">Product Management</h1>
+      <a 
+        href="https://artanna-luxury-decor.sanity.studio/" 
+        target="_blank"
+        class="bg-secondary text-primary px-6 py-2 font-medium hover:bg-opacity-90 transition-colors"
+      >
+        Open Sanity Studio
+      </a>
+    </div>
+
+    <div class="bg-white shadow rounded-lg overflow-hidden">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          {products?.map((product) => (
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                  <div class="h-10 w-10 flex-shrink-0">
+                    <img class="h-10 w-10 object-cover" src={product.mainImage} alt={product.title} />
+                  </div>
+                  <div class="ml-4">
+                    <div class="text-sm font-medium text-gray-900">{product.title}</div>
+                    <div class="text-sm text-gray-500">{product.slug}</div>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">£{product.pricing?.basePrice}</div>
+                {product.pricing?.salePrice && (
+                  <div class="text-sm text-green-600">Sale: £{product.pricing.salePrice}</div>
+                )}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span class={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                  ${product.status === 'active' ? 'bg-green-100 text-green-800' : 
+                    product.status === 'draft' ? 'bg-yellow-100 text-yellow-800' : 
+                    'bg-gray-100 text-gray-800'}`}>
+                  {product.status}
+                </span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {product.inventory?.quantity ?? 'N/A'}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <a href={`https://artanna-luxury-decor.sanity.studio/desk/product/${product._id}`} target="_blank" class="text-secondary hover:text-opacity-80">
+                  Edit
+                </a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</Layout>

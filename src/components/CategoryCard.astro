@@ -1,0 +1,30 @@
+---
+interface Props {
+  title: string;
+  image: string;
+  slug: string;
+  description?: string;
+}
+
+const { title, image, slug, description } = Astro.props;
+
+// Fallback image if the category image fails to load
+const fallbackImage = 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80';
+---
+
+<a href={`/collections/${slug}`} class="group block">
+  <div class="relative aspect-square overflow-hidden rounded-lg shadow-md">
+    <img 
+      src={image} 
+      alt={title}
+      class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+      onerror={`this.onerror=null; this.src='${fallbackImage}';`}
+    />
+    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300 flex flex-col items-center justify-center text-center p-6">
+      <h3 class="text-white font-serif text-2xl md:text-3xl mb-2">{title}</h3>
+      {description && (
+        <p class="text-white text-sm md:text-base opacity-90">{description}</p>
+      )}
+    </div>
+  </div>
+</a>

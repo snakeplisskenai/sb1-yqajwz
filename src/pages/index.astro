@@ -1,0 +1,103 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CategoryCard from '../components/CategoryCard.astro';
+import InstagramFeed from '../components/InstagramFeed.astro';
+
+const categories = [
+  {
+    title: 'Modern Elegance',
+    slug: 'modern-elegance',
+    description: 'Contemporary pieces with a luxurious twist',
+    image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=80'
+  },
+  {
+    title: 'Classic Luxury',
+    slug: 'classic-luxury',
+    description: 'Timeless designs that never go out of style',
+    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80'
+  },
+  {
+    title: 'Art Deco Inspired',
+    slug: 'art-deco-inspired',
+    description: 'Geometric patterns and bold statements',
+    image: 'https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=800&q=80'
+  }
+];
+
+const shopCategories = [
+  {
+    title: 'Furniture',
+    slug: 'furniture',
+    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80'
+  },
+  {
+    title: 'Lighting',
+    slug: 'lighting',
+    image: 'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=800&q=80'
+  },
+  {
+    title: 'Accessories',
+    slug: 'accessories',
+    image: 'https://images.unsplash.com/photo-1586208958839-06c17cacdf08?w=800&q=80'
+  }
+];
+---
+
+<Layout title="ARTANNA - Luxury Home Decor">
+  <div class="min-h-screen">
+    <!-- Hero Section -->
+    <section class="relative h-[80vh]">
+      <img 
+        src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200&q=80"
+        alt="Luxury Interior" 
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-black/30"></div>
+      <div class="relative h-full flex items-center justify-center text-center text-white px-4">
+        <div class="max-w-3xl">
+          <h1 class="font-serif text-6xl md:text-8xl mb-6">ARTANNA</h1>
+          <p class="text-xl md:text-2xl mb-8">Luxury Home Decor</p>
+          <a href="/shop" class="inline-block bg-white text-primary px-8 py-3 text-lg font-medium tracking-wide hover:bg-opacity-90 transition-colors">
+            Shop Collection
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shop Categories Section -->
+    <section class="py-20">
+      <div class="container mx-auto px-4">
+        <h2 class="font-serif text-4xl md:text-5xl text-center mb-12">Shop by Category</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {shopCategories.map(category => (
+            <CategoryCard 
+              title={category.title}
+              image={category.image}
+              slug={category.slug}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Collections Section -->
+    <section class="py-20 bg-accent">
+      <div class="container mx-auto px-4">
+        <h2 class="font-serif text-4xl md:text-5xl text-center mb-12">Our Collections</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {categories.map(category => (
+            <CategoryCard 
+              title={category.title}
+              image={category.image}
+              slug={category.slug}
+              description={category.description}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Instagram Feed -->
+    <InstagramFeed />
+  </div>
+</Layout>

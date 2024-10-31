@@ -1,0 +1,133 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { products } from '../../../data/products';
+import type { Product } from '../../../types';
+
+export function getStaticPaths() {
+  return products.map(product => ({
+    params: {
+      category: product.category,
+      slug: product.slug
+    },
+    props: { product }
+  }));
+}
+
+const { product } = Astro.props;
+
+const relatedProducts = products
+  .filter(p => p.category === product.category && p._id !== product._id)
+  .slice(0, 4);
+---
+
+<Layout 
+  title={`${product.title} - ARTANNA Luxury Home Decor`}
+  description={product.description}
+>
+  <div class="container mx-auto px-4 py-12">
+    <nav class="text-sm mb-8">
+      <a href="/shop" class="hover:text-secondary transition-colors">Shop</a>
+      <span class="mx-2">/</span>
+      <a href={`/shop/${product.category}`} class="hover:text-secondary transition-colors capitalize">
+        {product.category.replace('-', ' ')}
+      </a>
+      <span class="mx-2">/</span>
+      <span class="text-secondary">{product.title}</span>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div class="space-y-4">
+        <div class="aspect-square overflow-hidden rounded-lg">
+          <img 
+            src={product.mainImage} 
+            alt={product.title}
+            class="w-full h-full object-cover"
+          />
+        </div>
+        {product.images && (
+          <div class="grid grid-cols-4 gap-4">
+            {product.images.map((image) => (
+              <button class="aspect-square overflow-hidden rounded-lg">
+                <img 
+                  src={image} 
+                  alt={product.title}
+                  class="w-full h-full object-cover hover:opacity-80 transition-opacity"
+                />
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div>
+        <h1 class="font-serif text-3xl md:text-4xl mb-4">{product.title}</h1>
+        <p class="text-2xl font-medium mb-6">£{product.price.toFixed(2)}</p>
+
+        <div class="prose prose-lg mb-8">
+          <p>{product.description}</p>
+        </div>
+
+        {product.specifications && (
+          <div class="mb-8">
+            <h2 class="font-serif text-xl mb-4">Specifications</h2>
+            <dl class="grid grid-cols-2 gap-y-4">
+              {Object.entries(product.specifications).map(([key, value]) => (
+                <>
+                  <dt class="font-medium">{key}</dt>
+                  <dd class="text-gray-600">{value}</dd>
+                </>
+              ))}
+            </dl>
+          </div>
+        )}
+
+        <button 
+          class={`w-full py-4 px-6 text-center font-medium transition-colors ${
+            product.inStock 
+              ? 'bg-secondary text-primary hover:bg-opacity-90' 
+              : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+          }`}
+          disabled={!product.inStock}
+        >
+          {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+        </button>
+
+        <div class="mt-8 space-y-4">
+          <div class="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+            </svg>
+            <span>Free UK delivery on orders over £50</span>
+          </div>
+          <div class="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+            <span>30-day return policy</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {relatedProducts.length > 0 && (
+      <div class="mt-20">
+        <h2 class="font-serif text-3xl text-center mb-12">You May Also Like</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          {relatedProducts.map(relatedProduct => (
+            <a href={`/shop/${relatedProduct.category}/${relatedProduct.slug}`} class="group">
+              <div class="aspect-square overflow-hidden rounded-lg mb-4">
+                <img 
+                  src={relatedProduct.mainImage} 
+                  alt={relatedProduct.title}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <h3 class="font-serif text-lg mb-2">{relatedProduct.title}</h3>
+              <p class="text-sm font-medium">£{relatedProduct.price.toFixed(2)}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+</Layout>

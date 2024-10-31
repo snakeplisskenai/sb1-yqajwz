@@ -1,0 +1,99 @@
+---
+interface Props {
+  isOpen: boolean;
+}
+
+const { isOpen } = Astro.props;
+
+const categories = {
+  'Living Room': {
+    subcategories: ['Sofas', 'Armchairs', 'Coffee Tables', 'Side Tables', 'TV Units'],
+    featured: [
+      {
+        name: 'Velvet Tufted Sofa',
+        price: 2499.99,
+        image: '/images/products/velvet-sofa.jpg'
+      }
+    ]
+  },
+  'Dining Room': {
+    subcategories: ['Dining Tables', 'Dining Chairs', 'Sideboards', 'Display Cabinets', 'Bar Stools'],
+    featured: [
+      {
+        name: 'Marble Dining Table',
+        price: 1899.99,
+        image: '/images/products/marble-table.jpg'
+      }
+    ]
+  },
+  'Bedroom': {
+    subcategories: ['Beds', 'Bedside Tables', 'Dressing Tables', 'Wardrobes', 'Bedroom Chairs'],
+    featured: [
+      {
+        name: 'Upholstered Bed Frame',
+        price: 1299.99,
+        image: '/images/products/bed-frame.jpg'
+      }
+    ]
+  },
+  'Lighting': {
+    subcategories: ['Chandeliers', 'Table Lamps', 'Floor Lamps', 'Wall Lights', 'Pendant Lights'],
+    featured: [
+      {
+        name: 'Crystal Chandelier',
+        price: 899.99,
+        image: '/images/products/chandelier.jpg'
+      }
+    ]
+  },
+  'Accessories': {
+    subcategories: ['Mirrors', 'Wall Art', 'Vases', 'Cushions', 'Throws'],
+    featured: [
+      {
+        name: 'Gold Frame Mirror',
+        price: 399.99,
+        image: '/images/products/mirror.jpg'
+      }
+    ]
+  }
+};
+---
+
+<div class={`fixed inset-x-0 top-[76px] bg-white shadow-lg transform transition-transform duration-300 ${isOpen ? 'translate-y-0' : '-translate-y-full'}`}>
+  <div class="container mx-auto px-4 py-8">
+    <div class="grid grid-cols-5 gap-8">
+      {Object.entries(categories).map(([category, data]) => (
+        <div>
+          <h3 class="font-serif text-lg mb-4">{category}</h3>
+          <ul class="space-y-2">
+            {data.subcategories.map(subcategory => (
+              <li>
+                <a 
+                  href={`/shop/${category.toLowerCase().replace(' ', '-')}/${subcategory.toLowerCase().replace(' ', '-')}`}
+                  class="text-gray-600 hover:text-secondary transition-colors"
+                >
+                  {subcategory}
+                </a>
+              </li>
+            ))}
+          </ul>
+          {data.featured.map(product => (
+            <div class="mt-6">
+              <a href="#" class="group block">
+                <div class="aspect-square overflow-hidden rounded-lg mb-2">
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <h4 class="text-sm font-medium">{product.name}</h4>
+                <p class="text-sm text-gray-500">£{product.price.toFixed(2)}</p>
+              </a>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+</div>

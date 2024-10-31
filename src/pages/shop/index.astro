@@ -1,0 +1,31 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProductGrid from '../../components/ProductGrid.astro';
+import { getProducts } from '../../lib/db';
+import type { Product } from '../../types';
+
+let products: Product[] = [];
+try {
+  products = await getProducts();
+} catch (error) {
+  console.error('Error loading products:', error);
+}
+---
+
+<Layout 
+  title="Shop - ARTANNA Luxury Home Decor"
+  description="Browse our curated collection of luxury home decor, furniture, and accessories."
+>
+  <div class="py-12">
+    <div class="container mx-auto px-4">
+      <h1 class="font-serif text-4xl md:text-5xl text-center mb-12">Our Collection</h1>
+      <div class="flex justify-center space-x-4 mb-12">
+        <a href="/shop" class="text-secondary font-medium">All</a>
+        <a href="/shop/furniture" class="hover:text-secondary transition-colors">Furniture</a>
+        <a href="/shop/lighting" class="hover:text-secondary transition-colors">Lighting</a>
+        <a href="/shop/accessories" class="hover:text-secondary transition-colors">Accessories</a>
+      </div>
+      <ProductGrid products={products} />
+    </div>
+  </div>
+</Layout>

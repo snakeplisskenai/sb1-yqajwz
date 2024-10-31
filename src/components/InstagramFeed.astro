@@ -1,0 +1,81 @@
+---
+// Instagram feed data
+const instagramPosts = [
+  {
+    id: 1,
+    image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=600&q=80',
+    caption: 'Elegant living room setup featuring our new velvet collection',
+    likes: 234,
+    url: 'https://www.instagram.com/p/example1'
+  },
+  {
+    id: 2,
+    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80',
+    caption: 'Classic luxury meets modern design',
+    likes: 189,
+    url: 'https://www.instagram.com/p/example2'
+  },
+  {
+    id: 3,
+    image: 'https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=600&q=80',
+    caption: 'Art deco inspired pieces now available',
+    likes: 156,
+    url: 'https://www.instagram.com/p/example3'
+  },
+  {
+    id: 4,
+    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&q=80',
+    caption: 'New arrivals in our furniture collection',
+    likes: 278,
+    url: 'https://www.instagram.com/p/example4'
+  }
+];
+---
+
+<section class="py-16 bg-accent">
+  <div class="container mx-auto px-4">
+    <h2 class="font-serif text-3xl md:text-4xl text-center mb-8">Follow Us on Instagram</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {instagramPosts.map(post => (
+        <a 
+          href={post.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group relative aspect-square overflow-hidden"
+        >
+          <img 
+            src={post.image} 
+            alt={post.caption}
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+          <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300">
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div class="text-white text-center p-4">
+                <p class="text-sm mb-2">{post.caption}</p>
+                <div class="flex items-center justify-center">
+                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 18.333l-1.75-1.592C3.5 12.25 0 9.083 0 5.333 0 2.417 2.333 0 5.167 0 6.833 0 8.417.833 9.417 2.167 10.417.833 12 0 13.667 0 16.5 0 18.833 2.417 18.833 5.333c0 3.75-3.5 6.917-8.083 11.408L10 18.333z"/>
+                  </svg>
+                  <span>{post.likes}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+    <div class="text-center mt-8">
+      <a 
+        href="https://www.instagram.com/artanna.co.uk" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        class="inline-flex items-center space-x-2 text-primary hover:text-secondary transition-colors"
+      >
+        <span>Follow @artanna.co.uk</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

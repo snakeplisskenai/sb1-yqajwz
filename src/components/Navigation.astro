@@ -1,0 +1,105 @@
+---
+const categories = {
+  'Shop By Room': [
+    { name: 'Living Room', href: '/shop/living-room' },
+    { name: 'Dining Room', href: '/shop/dining-room' },
+    { name: 'Bedroom', href: '/shop/bedroom' },
+    { name: 'Kitchen', href: '/shop/kitchen' },
+    { name: 'Entrance Hall', href: '/shop/entrance-hall' }
+  ],
+  'Furniture': [
+    { name: 'Sofas & Armchairs', href: '/shop/furniture/sofas' },
+    { name: 'Dining Tables & Chairs', href: '/shop/furniture/dining' },
+    { name: 'Bedroom Furniture', href: '/shop/furniture/bedroom' },
+    { name: 'Storage & Units', href: '/shop/furniture/storage' }
+  ],
+  'Lighting': [
+    { name: 'Chandeliers', href: '/shop/lighting/chandeliers' },
+    { name: 'Table Lamps', href: '/shop/lighting/table' },
+    { name: 'Floor Lamps', href: '/shop/lighting/floor' },
+    { name: 'Wall Lights', href: '/shop/lighting/wall' }
+  ],
+  'Accessories': [
+    { name: 'Mirrors & Art', href: '/shop/accessories/mirrors-art' },
+    { name: 'Cushions & Throws', href: '/shop/accessories/soft-furnishings' },
+    { name: 'Vases & Ornaments', href: '/shop/accessories/decorative' },
+    { name: 'Rugs & Textiles', href: '/shop/accessories/textiles' }
+  ]
+};
+---
+
+<header class="fixed w-full bg-white z-50">
+  <!-- Top Bar -->
+  <div class="bg-primary text-white text-sm py-2">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-between items-center">
+        <p>Free UK Delivery on Orders Over £50</p>
+        <div class="flex space-x-4">
+          <a href="/contact" class="hover:text-secondary transition-colors">Contact</a>
+          <a href="/account" class="hover:text-secondary transition-colors">Account</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <nav class="border-b border-gray-100">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-between items-center h-20">
+        <!-- Logo -->
+        <a href="/" class="font-serif text-3xl tracking-wider">ARTANNA</a>
+
+        <!-- Main Menu -->
+        <div class="hidden lg:flex items-center space-x-8">
+          <a href="/new-arrivals" class="hover:text-secondary transition-colors">New In</a>
+          
+          {Object.entries(categories).map(([category, items]) => (
+            <div class="group relative">
+              <button class="flex items-center space-x-1 py-8 hover:text-secondary transition-colors">
+                <span>{category}</span>
+                <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </button>
+              
+              <!-- Dropdown -->
+              <div class="absolute left-0 top-full w-64 invisible opacity-0 translate-y-2 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200">
+                <div class="pt-4">
+                  <div class="bg-white shadow-lg rounded-lg py-4">
+                    {items.map(item => (
+                      <a 
+                        href={item.href}
+                        class="block px-6 py-2 hover:bg-gray-50 hover:text-secondary transition-colors"
+                      >
+                        {item.name}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+          
+          <a href="/collections" class="hover:text-secondary transition-colors">Collections</a>
+          <a href="/outlet" class="hover:text-secondary transition-colors">Outlet</a>
+        </div>
+
+        <!-- Search and Cart -->
+        <div class="flex items-center space-x-6">
+          <button class="hover:text-secondary transition-colors">
+            <span class="sr-only">Search</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </button>
+          <a href="/cart" class="hover:text-secondary transition-colors">
+            <span class="sr-only">Cart</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

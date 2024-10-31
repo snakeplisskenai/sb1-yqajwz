@@ -1,0 +1,22 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProductGrid from '../../components/ProductGrid.astro';
+import { products } from '../../data/products';
+
+// Get the latest products (most recent 12)
+const newProducts = products
+  .sort((a, b) => b._id.localeCompare(a._id))
+  .slice(0, 12);
+---
+
+<Layout 
+  title="New Arrivals - ARTANNA Luxury Home Decor"
+  description="Discover our latest luxury home decor pieces and furniture collections."
+>
+  <div class="py-12">
+    <div class="container mx-auto px-4">
+      <h1 class="font-serif text-4xl md:text-5xl text-center mb-12">New Arrivals</h1>
+      <ProductGrid products={newProducts} />
+    </div>
+  </div>
+</Layout>

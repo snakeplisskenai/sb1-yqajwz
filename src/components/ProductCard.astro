@@ -1,0 +1,28 @@
+---
+interface Props {
+  title: string;
+  price: number;
+  image: string;
+  slug: string;
+  category: string;
+}
+
+const { title, price, image, slug, category } = Astro.props;
+
+const fallbackImage = 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80';
+---
+
+<article class="group">
+  <a href={`/shop/${category}/${slug}`} class="block">
+    <div class="relative aspect-square overflow-hidden mb-4">
+      <img 
+        src={image || fallbackImage}
+        alt={title}
+        class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+        onerror={`this.onerror=null; this.src='${fallbackImage}';`}
+      />
+    </div>
+    <h3 class="font-serif text-lg mb-2">{title}</h3>
+    <p class="text-sm font-medium">£{price.toFixed(2)}</p>
+  </a>
+</article>
